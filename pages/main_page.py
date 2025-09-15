@@ -25,14 +25,14 @@ class MainPage(BaseObject):
     def open_all_page_and_get_url(self):
 
         page_to_check = [
-            ("DRAG_AND_DROP", self.DRAG_AND_DROP_BTN, "test"),
+            ("DRAG_AND_DROP", self.DRAG_AND_DROP_BTN, URL.DRAG_DROP_URL),
             ("INPUT_AND_CLICK", self.INPUT_AND_CLICK_BTN, URL.INPUT_AND_CLICK_URL),
             ("CHECKBOXES_AND_SCROLL", self.CHECKBOXES_AND_SCROLL_BTN, URL.CHECKBOXES_AND_SCROLL_URL),
             ("CHECK_AND_VALIDATE", self.CHECK_AND_VALIDATE_BTN, URL.CHECK_AND_VALIDATE_URL),
             ("SORTING", self.SORTING_BTN, URL.SORTING_URL),
             ("GAME", self.GAME_BTN, URL.GAME_URL),
             ("ASYNC_OPERATION", self.ASYNC_OPERATION_BTN, URL.ASYNCHRONOUS_OPERATIONS_URL),
-            ("DATA_CONVERTER", self.DATA_CONVERTER_BTN, "test"),
+            ("DATA_CONVERTER", self.DATA_CONVERTER_BTN, URL.DATA_CONVERTER_URL),
         ]
         result = []
         for name, locator, expected_url in page_to_check:

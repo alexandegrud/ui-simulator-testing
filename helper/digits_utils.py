@@ -7,4 +7,4 @@ class DigitsUtils:
         for char in text:
             if char.isdigit():
                 nums += char
-        return int(nums)
+        return int(nums) if nums else None

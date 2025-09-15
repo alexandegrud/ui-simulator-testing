@@ -12,6 +12,7 @@ class AsynchronousOperationPage(BaseObject):
     def __init__(self, driver):
         super().__init__(driver)
         self.data_loading = DataLoading(self.driver)
+        self.autocomplete = AutoComplete(self.driver)
 
     def open_section(self):
         self.driver.get(self.ASYNCHRONOUS_OPERATION_PAGE_URL)
@@ -31,7 +32,7 @@ class DataLoading(BaseObject):
         super().__init__(driver)
 
     def clear_input_field(self):
-        self.clear(self.INPUT_FIELD)
+        self.clear_backspace(self.INPUT_FIELD)
 
     def enter_value(self, value):
         self.send_keys(self.INPUT_FIELD, value)
@@ -62,7 +63,7 @@ class DataLoading(BaseObject):
         self.hover(self.ERROR_MESSAGE)
 
     def check_load_btn_is_not_clickable(self):
-        return self.is_not_clickable(self.LOAD_DATA_BTN)
+        return self.is_not_clickable(self.LOAD_DATA_BTN, timeout=2)
 
     def get_error_message(self):
         return self.get_text(self.ERROR_MESSAGE)
@@ -81,5 +82,22 @@ class DataLoading(BaseObject):
             return self._get_visible(self.LOADING_INDICATOR, timeout=2)
         except TimeoutException:
             raise TimeoutException("Loading indicator did not appear")
+
+
+class AutoComplete(BaseObject):
+
+    TEXT_FIELD = (By.ID, 'autocompleteInput')
+    AUTOCOMPLETE_ITEMS_LIST = (By.XPATH, "//ul[@id='autocompleteList']//li")
+
+    def __init__(self, driver):
+        super().__init__(driver)
+
+    def enter_text(self, text):
+        self.send_keys(self.TEXT_FIELD, text)
+
+    def get_text_from_autocomplete_list(self):
+        list_of_text = self.get_texts_of_all_elements(self.AUTOCOMPLETE_ITEMS_LIST, timeout=2)
+        return list_of_text or "Empty list"
+
 
 

@@ -4,6 +4,10 @@ from pytest import mark
     [
         (1, 1),
         (50, 50),
+    ],
+    ids=[
+        "Minimum delay value",
+        "Max delay value",
     ]
 )
 
@@ -25,7 +29,15 @@ def test_check_time_load(init_asynchronous_operation_page, value, expected_value
         (1, ""),
         (50, ""),
         (25, ""),
-        ("", "")
+        ("", "Please enter a number between 1 and 50")
+    ],
+    ids=[
+        "Above the max",
+        "Under the min",
+        "In range - value: 1",
+        "In range - value: 50",
+        "In range - value: 25",
+        "Empty",
     ]
 )
 
@@ -67,3 +79,27 @@ def test_loading_indicator_is_displayed(init_asynchronous_operation_page):
     init_asynchronous_operation_page.data_loading.clear_input_field()
     init_asynchronous_operation_page.data_loading.enter_value_and_click(value)
     init_asynchronous_operation_page.data_loading.check_loading_indicator_is_displayed()
+
+
+@mark.parametrize(
+    "text",
+    [
+        "P",
+        "C",
+        "Swift",
+        "Ru",
+        "Ja",
+    ]
+)
+
+def test_autocomplete_correctness(init_asynchronous_operation_page, text):
+    init_asynchronous_operation_page.open_section()
+    init_asynchronous_operation_page.autocomplete.enter_text(text)
+    init_asynchronous_operation_page.assertions.is_contains_text(
+        text,
+        init_asynchronous_operation_page.autocomplete.get_text_from_autocomplete_list()
+    )
+
+
+
+

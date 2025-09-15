@@ -26,3 +26,8 @@ class Assertions:
     @staticmethod
     def is_less_or_equal(actual, max_value):
             assert actual <= max_value, f"Actual {actual} more than {max_value}, but should be less or equal"
+
+    @staticmethod
+    def is_contains_text(text, source_texts : list):
+        for source_text in source_texts:
+            assert text.lower() in source_text.lower(), f"'{text}' not found in: '{source_texts}'"

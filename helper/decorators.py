@@ -17,7 +17,7 @@ class Decorator:
                 while time.time() < end_time:
                     result = func(*args, **kwargs)
                     if result:
-                        return
+                        return result
                     time.sleep(poll_frequency)
                 err_msg = message or "Function '{func}' did not succeed within {timeout} seconds"
                 raise exception(err_msg.format(func=func.__name__, timeout=timeout, poll_frequency=poll_frequency))

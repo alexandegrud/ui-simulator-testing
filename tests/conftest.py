@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from pages.asynchronous_operation_page import AsynchronousOperationPage
 from pages.drag_drop_page import DragDropPage
+from pages.game_page import GamePage
 from pages.input_click_page import InputClickPage
 from pages.login_page import LoginPage
 from pages.check_validate_value_page import ValueValidatePage
@@ -65,4 +66,9 @@ def init_asynchronous_operation_page(init_login_page, setup):
 def init_drag_and_drop_page(init_login_page, setup):
     init_login_page.login()
     return DragDropPage(driver=setup)
+
+@fixture
+def init_game_page(init_login_page, setup):
+    init_login_page.login()
+    return GamePage(driver=setup)
 

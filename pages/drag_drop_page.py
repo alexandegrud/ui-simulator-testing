@@ -3,6 +3,7 @@ from base.base import BaseObject
 from selenium.webdriver.common.by import By
 from config import URL
 import time
+
 class DragDropPage(BaseObject):
 
     DRAG_AND_DROP_URL = URL.DRAG_DROP_URL
@@ -19,12 +20,12 @@ class DragDropPage(BaseObject):
     def get_all_letters_in_container(self):
         return self.get_all_elements_located(self.LETTERS_IN_CONTAINER)
 
-    def get_or_update_letters_container(self):
+    def get_letters_container(self):
         letters = self.get_all_letters_in_container()
         return letters
 
     def construct_word(self, word_to_construct):
-        letters = self.get_or_update_letters_container()
+        letters = self.get_letters_container()
 
         letter_map = {}
         for letter in letters:
@@ -42,7 +43,7 @@ class DragDropPage(BaseObject):
 
             if moving_letter_element != target_letter_element:
                 self.drag_and_drop(moving_letter_element, target_letter_element)
-                letters = self.get_or_update_letters_container()
+                letters = self.get_letters_container()
 
     def get_text_of_success_message(self):
         try:
