@@ -80,7 +80,7 @@ class GamePage(BaseObject):
                     return text
                 self.back_to_config()
 
-    def check_attempts_message(self, max_number, attempts_count, gues_value, win=False, lose=False):
+    def check_attempts_msg(self, max_number, attempts_count, gues_value, win=False, lose=False):
         self.enter_parameter_for_game_and_start(max_number, attempts_count)
         if lose:
             i = 0
@@ -98,4 +98,5 @@ class GamePage(BaseObject):
                 self.clear(self.GUESS_FILED)
                 self.enter_guess_and_check(gues_value)
                 i += 1
+
             return self.get_text(self.ATTEMPTS_MSG)
