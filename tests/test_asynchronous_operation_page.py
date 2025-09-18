@@ -81,6 +81,8 @@ def test_loading_indicator_is_displayed(init_asynchronous_operation_page):
     init_asynchronous_operation_page.data_loading.check_loading_indicator_is_displayed()
 
 
+#Autocomlete
+
 @mark.parametrize(
     "text",
     [
@@ -89,6 +91,13 @@ def test_loading_indicator_is_displayed(init_asynchronous_operation_page):
         "Swift",
         "Ru",
         "Ja",
+    ],
+    ids= [
+        "A 1-letter search query",
+        "A 1-letter search query",
+        "Full-word search query",
+        "A 2-letter search query",
+        "A 2-letter search query",
     ]
 )
 
@@ -98,6 +107,32 @@ def test_autocomplete_correctness(init_asynchronous_operation_page, text):
     init_asynchronous_operation_page.assertions.is_contains_text(
         text,
         init_asynchronous_operation_page.autocomplete.get_text_from_autocomplete_list()
+    )
+
+@mark.parametrize(
+    "text, expected_message",
+    [
+        ("1234", "Empty"),
+        ("ыа", "Empty"),
+        ("!@##%$", "Empty"),
+        ("   ", "Empty"),
+        ("", "Empty"),
+    ],
+    ids=[
+        "Only digit",
+        "Cyrillic letters",
+        "Special characters",
+        "Only spaces",
+        "Empty",
+    ]
+)
+
+def test_invalid_search(init_asynchronous_operation_page, text, expected_message):
+    init_asynchronous_operation_page.open_section()
+    init_asynchronous_operation_page.autocomplete.enter_text(text)
+    init_asynchronous_operation_page.assertions.is_equal(
+        init_asynchronous_operation_page.autocomplete.get_text_from_autocomplete_list(),
+        expected_message
     )
 
 

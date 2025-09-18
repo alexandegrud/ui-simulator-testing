@@ -97,7 +97,7 @@ class AutoComplete(BaseObject):
 
     def get_text_from_autocomplete_list(self):
         list_of_text = self.get_texts_of_all_elements(self.AUTOCOMPLETE_ITEMS_LIST, timeout=2)
-        return list_of_text or "Empty list"
+        return list_of_text or "Empty"
 
 
 

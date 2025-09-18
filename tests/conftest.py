@@ -11,7 +11,7 @@ from pages.login_page import LoginPage
 from pages.check_validate_value_page import ValueValidatePage
 from pages.checkboxes_scroll_page import CheckboxesScrollPage
 from pages.main_page import MainPage
-
+from pages.sorting_page import SortingPage
 
 
 @fixture
@@ -71,4 +71,9 @@ def init_drag_and_drop_page(init_login_page, setup):
 def init_game_page(init_login_page, setup):
     init_login_page.login()
     return GamePage(driver=setup)
+
+@fixture
+def init_sorting_page(init_login_page, setup):
+    init_login_page.login()
+    return SortingPage(driver=setup)
 

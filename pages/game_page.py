@@ -82,7 +82,7 @@ class GamePage(BaseObject):
 
 
 
-    def check_attempts_msg(self, max_number, attempts_count, gues_value, win=False, lose=False):
+    def check_attempts_message(self, max_number, attempts_count, gues_value, win=False, lose=False):
         self.enter_parameter_for_game_and_start(max_number, attempts_count)
         if lose:
             i = 0

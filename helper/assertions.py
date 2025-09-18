@@ -31,3 +31,12 @@ class Assertions:
     def is_contains_text(text, source_texts : list):
         for source_text in source_texts:
             assert text.lower() in source_text.lower(), f"'{text}' not found in: '{source_texts}'"
+
+    @staticmethod
+    def are_digits_sorted(nums: list[int]):
+        assert nums == sorted(nums), "The digits are not sorted"
+
+    @staticmethod
+    def is_text_sorted(texts: list):
+        text_lower = [text.lower() for text in texts]
+        assert text_lower == sorted(text_lower), "The text is not sorted"
