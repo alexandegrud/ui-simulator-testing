@@ -13,6 +13,8 @@ class AsynchronousOperationPage(BaseObject):
         super().__init__(driver)
         self.data_loading = DataLoading(self.driver)
         self.autocomplete = AutoComplete(self.driver)
+        self.infinite_scroll = InfiniteScroll(self.driver)
+        self.error_handling = ErrorHandling(self.driver)
 
     def open_section(self):
         self.driver.get(self.ASYNCHRONOUS_OPERATION_PAGE_URL)
@@ -98,6 +100,69 @@ class AutoComplete(BaseObject):
     def get_text_from_autocomplete_list(self):
         list_of_text = self.get_texts_of_all_elements(self.AUTOCOMPLETE_ITEMS_LIST, timeout=2)
         return list_of_text or "Empty"
+
+class InfiniteScroll(BaseObject):
+
+    ITEMS_LIST = (By.ID, "infiniteScrollList")
+    ITEM_IN_LIST = (By.XPATH, "//ul//li")
+
+    def __init__(self, driver):
+        super().__init__(driver)
+
+    def scroll_to_section(self):
+        self.scroll_to_element(self.ITEM_IN_LIST)
+
+    @Decorator.delay(2, 1)
+    def scroll_and_get_items_list(self, stop_count=10):
+        """
+        Добавил декоратор delay, т к после скролла к разделу, сам раздел не успевал полностью подгрузиться и из-за этого
+        число возвращаемое число items было меньше, чем на самом деле.
+
+        """
+        last_count = 0
+
+        while True:
+            current_count = self.get_items_count_in_list()
+
+            if current_count >= stop_count or current_count == last_count:
+                break
+            else:
+                self.scroll_element_by_step(self.ITEMS_LIST, 500)
+                last_count = current_count
+        return current_count
+
+
+    def get_items_count_in_list(self):
+        items = self.get_all_elements_located(self.ITEM_IN_LIST, timeout=2)
+        return len(items)
+
+
+class ErrorHandling(BaseObject):
+
+    TRIGGER_ERROR_BTN = (By.ID, "errorBtn")
+    ERROR_MESSAGE = (By.ID, "errorMessage")
+
+
+    def __init__(self, driver):
+        super().__init__(driver)
+
+    def scroll_to_section(self):
+        self.scroll_to_element(self.ERROR_MESSAGE)
+
+    def trigger_error(self):
+        self.click(self.TRIGGER_ERROR_BTN)
+
+    def get_message(self):
+        return self.get_text(self.ERROR_MESSAGE)
+
+    @Decorator.retry(10, 1, TimeoutException)
+    def get_error_message(self):
+        message = self.get_message()
+        if message == "An error occurred: Simulated error":
+            return message
+        else:
+            return False
+
 
 
 

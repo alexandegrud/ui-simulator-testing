@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from pages.asynchronous_operation_page import AsynchronousOperationPage
+from pages.data_convert_page import DataConvertPage
 from pages.drag_drop_page import DragDropPage
 from pages.game_page import GamePage
 from pages.input_click_page import InputClickPage
@@ -76,4 +77,9 @@ def init_game_page(init_login_page, setup):
 def init_sorting_page(init_login_page, setup):
     init_login_page.login()
     return SortingPage(driver=setup)
+
+@fixture
+def init_data_convert_page(init_login_page, setup):
+    init_login_page.login()
+    return DataConvertPage(driver=setup)
 

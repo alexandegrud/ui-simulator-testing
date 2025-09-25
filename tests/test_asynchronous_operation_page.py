@@ -1,4 +1,5 @@
 from pytest import mark
+import time
 @mark.parametrize(
     "value,expected_value",
     [
@@ -135,6 +136,51 @@ def test_invalid_search(init_asynchronous_operation_page, text, expected_message
         expected_message
     )
 
+#Infinite Scroll
+
+@mark.parametrize(
+    "stop_count, expected_count",
+    [
+        (50, 50),
+        (100, 100),
+    ],
+    ids=[
+        "50 items in list",
+        "100 items in list",
+    ]
+)
+
+def test_infinite_scrolling(init_asynchronous_operation_page, stop_count, expected_count):
+    init_asynchronous_operation_page.open_section()
+    init_asynchronous_operation_page.infinite_scroll.scroll_to_section()
+    count = init_asynchronous_operation_page.infinite_scroll.scroll_and_get_items_list(stop_count=stop_count)
+    init_asynchronous_operation_page.assertions.is_equal(
+        count,
+        expected_count
+    )
+    print(count)
+
+# Error Handing
+
+def test_check_error_simulated_msg(init_asynchronous_operation_page):
+    expected_message = "An error occurred: Simulated error"
+    init_asynchronous_operation_page.open_section()
+    init_asynchronous_operation_page.error_handling.scroll_to_section()
+    init_asynchronous_operation_page.error_handling.trigger_error()
+    init_asynchronous_operation_page.assertions.is_equal(
+        init_asynchronous_operation_page.error_handling.get_error_message(),
+        expected_message
+    )
+
+def test_check_processing_msg(init_asynchronous_operation_page):
+    expected_message = "Processing request..."
+    init_asynchronous_operation_page.open_section()
+    init_asynchronous_operation_page.error_handling.scroll_to_section()
+    init_asynchronous_operation_page.error_handling.trigger_error()
+    init_asynchronous_operation_page.assertions.is_equal(
+        init_asynchronous_operation_page.error_handling.get_message(),
+        expected_message
+    )
 
 
 

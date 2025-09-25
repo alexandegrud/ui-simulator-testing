@@ -23,3 +23,14 @@ class Decorator:
                 raise exception(err_msg.format(func=func.__name__, timeout=timeout, poll_frequency=poll_frequency))
             return wrapper
         return decorator
+
+    @staticmethod
+    def delay(timeout, poll_frequency):
+        def decorator(func):
+            def wrapper(*args, **kwargs):
+                end_time = time.time() + timeout
+                while time.time() < end_time:
+                    time.sleep(poll_frequency)
+                return func(*args, **kwargs)
+            return wrapper
+        return decorator

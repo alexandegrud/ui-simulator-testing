@@ -13,5 +13,3 @@ def test_sort_role(init_sorting_page):
     init_sorting_page.open_section()
     init_sorting_page.set_role_sort(True)
     init_sorting_page.assertions.is_text_sorted(init_sorting_page.get_column(get_role_column=True))
-
-

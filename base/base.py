@@ -113,4 +113,18 @@ class BaseObject:
     def drag_and_drop(self, source, target):
         self.actions.drag_and_drop(source, target).perform()
 
+    def scroll_element_by_step(self, locator, step, scroll_up=False):
+        element = self._get_visible(locator)
+
+        if scroll_up:
+            self.driver.execute_script("arguments[0].scrollTop -= arguments[1];", element, step)
+        else:
+            self.driver.execute_script("arguments[0].scrollTop += arguments[1];", element, step)
+
+    def scroll_to_element(self, locator):
+        self.actions.scroll_to_element(self._get_visible(locator)).perform()
+
+    def get_input_or_output_text(self, locator):
+        return self._get_visible(locator).get_attribute("value")
+
 
