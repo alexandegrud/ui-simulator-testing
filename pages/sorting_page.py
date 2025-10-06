@@ -1,25 +1,23 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
-from helper.digits_utils import DigitsUtils
 
 class SortingPage(BaseObject):
 
-    SORTING_PAGE_URL = URL.SORTING_URL
     NAME_SORTING_BTN = (By.XPATH, "//th[@onclick='sortTable(0)']")
     AGE_SORTING_BTN = (By.XPATH, "//th[@onclick='sortTable(1)']")
     ROLE_SORTING_BTN = (By.XPATH, "//th[@onclick='sortTable(2)']")
     ROWS_IN_TABLE = (By.XPATH, "//tbody//tr")
 
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         self.name_sort_enabled = False
         self.age_sort_enabled = False
         self.role_sort_enabled = False
+        self.url = url
         super().__init__(driver)
 
     def open_section(self):
-        self.driver.get(self.SORTING_PAGE_URL)
+        self.driver.get(self.url)
 
     def set_name_sort(self, on: bool):
         if self.name_sort_enabled != on:

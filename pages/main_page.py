@@ -1,6 +1,5 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
 
 class MainPage(BaseObject):
 
@@ -19,20 +18,21 @@ class MainPage(BaseObject):
 
 
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
+        self.url = url
 
     def open_all_page_and_get_url(self):
 
         page_to_check = [
-            ("DRAG_AND_DROP", self.DRAG_AND_DROP_BTN, URL.DRAG_DROP_URL),
-            ("INPUT_AND_CLICK", self.INPUT_AND_CLICK_BTN, URL.INPUT_AND_CLICK_URL),
-            ("CHECKBOXES_AND_SCROLL", self.CHECKBOXES_AND_SCROLL_BTN, URL.CHECKBOXES_AND_SCROLL_URL),
-            ("CHECK_AND_VALIDATE", self.CHECK_AND_VALIDATE_BTN, URL.CHECK_AND_VALIDATE_URL),
-            ("SORTING", self.SORTING_BTN, URL.SORTING_URL),
-            ("GAME", self.GAME_BTN, URL.GAME_URL),
-            ("ASYNC_OPERATION", self.ASYNC_OPERATION_BTN, URL.ASYNCHRONOUS_OPERATIONS_URL),
-            ("DATA_CONVERTER", self.DATA_CONVERTER_BTN, URL.DATA_CONVERTER_URL),
+            ("DRAG_AND_DROP", self.DRAG_AND_DROP_BTN, self.url.DRAG_DROP_URL),
+            ("INPUT_AND_CLICK", self.INPUT_AND_CLICK_BTN, self.url.INPUT_AND_CLICK_URL),
+            ("CHECKBOXES_AND_SCROLL", self.CHECKBOXES_AND_SCROLL_BTN, self.url.CHECKBOXES_AND_SCROLL_URL),
+            ("CHECK_AND_VALIDATE", self.CHECK_AND_VALIDATE_BTN, self.url.CHECK_AND_VALIDATE_URL),
+            ("SORTING", self.SORTING_BTN, self.url.SORTING_URL),
+            ("GAME", self.GAME_BTN, self.url.GAME_URL),
+            ("ASYNC_OPERATION", self.ASYNC_OPERATION_BTN, self.url.ASYNCHRONOUS_OPERATIONS_URL),
+            ("DATA_CONVERTER", self.DATA_CONVERTER_BTN, self.url.DATA_CONVERTER_URL),
         ]
         result = []
         for name, locator, expected_url in page_to_check:

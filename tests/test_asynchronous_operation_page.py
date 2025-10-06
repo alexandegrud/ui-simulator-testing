@@ -1,5 +1,5 @@
 from pytest import mark
-import time
+
 @mark.parametrize(
     "value,expected_value",
     [

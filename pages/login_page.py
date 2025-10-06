@@ -1,5 +1,6 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
+from config import Secrets
 
 
 class LoginPage(BaseObject):
@@ -14,8 +15,8 @@ class LoginPage(BaseObject):
         super().__init__(driver)
 
     def login(self,
-              username="correct_username",
-              password="correct_password"):
+              username=Secrets.USER_NAME,
+              password=Secrets.PASSWORD,):
         self.enter_username(username)
         self.enter_password(password)
         self.click_login()

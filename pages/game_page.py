@@ -1,11 +1,9 @@
 from selenium.webdriver.common.by import By
-from config import URL
 from base.base import BaseObject
 from helper.digits_utils import DigitsUtils
 
 class GamePage(BaseObject):
 
-    GAME_PAGE_URL = URL.GAME_URL
     NUMBER_FIELD = (By.ID, 'maxNumber')
     ATTEMPTS_FIELD = (By.ID, 'maxAttempts')
     START_GAME_BTN = (By.ID, 'startBtn')
@@ -18,11 +16,12 @@ class GamePage(BaseObject):
     RESULT_MSG = (By.ID, 'resultMessage')
     ATTEMPTS_MSG = (By.ID, 'attemptsMessage')
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
+        self.url = url
 
     def open_sections(self):
-        self.driver.get(self.GAME_PAGE_URL)
+        self.driver.get(self.url)
 
     def get_text_of_config_error_message(self):
         return self.get_text(self.ERROR_CONFIG_MSG)

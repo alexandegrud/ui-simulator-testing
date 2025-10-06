@@ -1,21 +1,20 @@
 from selenium.common import TimeoutException
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
 import time
 
 class DragDropPage(BaseObject):
 
-    DRAG_AND_DROP_URL = URL.DRAG_DROP_URL
     LETTERS_IN_CONTAINER = (By.CLASS_NAME, 'item')
     DONE_MESSAGE = (By.CLASS_NAME, 'done')
 
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
+        self.url = url
 
     def open_section(self):
-        self.driver.get(self.DRAG_AND_DROP_URL)
+        self.driver.get(self.url)
 
     def get_all_letters_in_container(self):
         return self.get_all_elements_located(self.LETTERS_IN_CONTAINER)

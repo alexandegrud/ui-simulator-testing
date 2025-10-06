@@ -1,10 +1,8 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
 
 class InputClickPage(BaseObject):
 
-    INPUT_AND_CLICK_URL = URL.INPUT_AND_CLICK_URL
     SELECT_BTN = (By.CLASS_NAME, 'dropdown')
     SECTION_BTN = (By.XPATH, '//a[@href="input-and-click.html"]')
     VALUE_FIELD = (By.ID, 'inputText')
@@ -13,11 +11,12 @@ class InputClickPage(BaseObject):
     BACK_BTN = (By.CLASS_NAME, 'back-button')
     ITEM_IN_CONTAINER = (By.CLASS_NAME, 'item')
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
+        self.url = url
 
     def open_section(self):
-        self.driver.get(self.INPUT_AND_CLICK_URL)
+        self.driver.get(self.url)
 
     def _enter_value(self, value):
         self.send_keys(self.VALUE_FIELD, value)

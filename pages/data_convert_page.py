@@ -1,22 +1,21 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
 import json
 import yaml
 
 class DataConvertPage(BaseObject):
 
-    DATA_CONVERT_URL = URL.DATA_CONVERTER_URL
     CONVERT_TO_JSON_BTN = (By.ID, "toJson")
     CONVERT_TO_YAML_BTN = (By.ID, "toYaml")
     INPUT_DATA_FIELD = (By.ID, "inputData")
     OUTPUT_DATA_FIELD = (By.ID, "outputData")
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
+        self.url = url
 
     def open_section(self):
-        self.driver.get(self.DATA_CONVERT_URL)
+        self.driver.get(self.url)
 
     def convert_data_to_json(self):
         self.click(self.CONVERT_TO_JSON_BTN)

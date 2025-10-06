@@ -1,10 +1,8 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
 
 class ValueValidatePage(BaseObject):
 
-    CHECK_VALIDATE_VALUE_PAGE = URL.CHECK_AND_VALIDATE_URL
     VALUE_FIELD = (By.ID, "dataInput")
     VALIDATION_SQUARE = (By.ID, "validationSquare")
     SELECT_BTN = (By.CLASS_NAME, "dropdown")
@@ -13,11 +11,12 @@ class ValueValidatePage(BaseObject):
     BACK_BTN = (By.CLASS_NAME, "back-button")
 
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
+        self.url = url
 
     def open_section(self):
-        self.driver.get(self.CHECK_VALIDATE_VALUE_PAGE)
+        self.driver.get(self.url)
 
     def enter_value(self, value):
         self.send_keys(self.VALUE_FIELD, value)

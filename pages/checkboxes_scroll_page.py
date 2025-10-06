@@ -1,10 +1,8 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
 
 class CheckboxesScrollPage(BaseObject):
 
-    CHECKBOXES_SCROLL_PAGE_URL = URL.CHECKBOXES_AND_SCROLL_URL
     SELECT_BTN = (By.CLASS_NAME, 'dropdown')
     SECTION_BTN = (By.XPATH, '//a[@href="checkbox-and-scroll.html"]')
     CHECKBOX_LIST = (By.XPATH, "//ul[@class='checkbox-list']//input[@type='checkbox']")
@@ -12,11 +10,12 @@ class CheckboxesScrollPage(BaseObject):
     BACK_BTN = (By.CLASS_NAME, 'back-button')
 
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
+        self.url = url
 
     def open_section(self):
-        self.driver.get(self.CHECKBOXES_SCROLL_PAGE_URL)
+        self.driver.get(self.url)
 
     def __get_all_checkboxes(self):
         return self.get_all_elements_located(self.CHECKBOX_LIST)

@@ -1,23 +1,22 @@
 from selenium.common import TimeoutException
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
-from config import URL
 from helper.decorators import Decorator
 from helper.digits_utils import DigitsUtils
 
 class AsynchronousOperationPage(BaseObject):
 
-    ASYNCHRONOUS_OPERATION_PAGE_URL = URL.ASYNCHRONOUS_OPERATIONS_URL
 
-    def __init__(self, driver):
+    def __init__(self, url, driver):
         super().__init__(driver)
         self.data_loading = DataLoading(self.driver)
         self.autocomplete = AutoComplete(self.driver)
         self.infinite_scroll = InfiniteScroll(self.driver)
         self.error_handling = ErrorHandling(self.driver)
+        self.url = url
 
     def open_section(self):
-        self.driver.get(self.ASYNCHRONOUS_OPERATION_PAGE_URL)
+        self.driver.get(self.url)
 
 
 class DataLoading(BaseObject):
