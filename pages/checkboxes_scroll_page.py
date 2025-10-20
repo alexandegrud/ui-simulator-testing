@@ -1,5 +1,6 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
+import allure
 
 class CheckboxesScrollPage(BaseObject):
 
@@ -14,6 +15,7 @@ class CheckboxesScrollPage(BaseObject):
         super().__init__(driver)
         self.url = url
 
+    @allure.step("Переход в раздел Checkboxes and scroll")
     def open_section(self):
         self.driver.get(self.url)
 
@@ -33,6 +35,7 @@ class CheckboxesScrollPage(BaseObject):
             i += 1
         return enabled_checkboxes
 
+    @allure.step("Включение/выключение заданного количества чекбоксов")
     def enable_and_disable_checkbox(self,count_checkbox_to_enable, checkboxes_to_disable):
         enabled_checkboxes = self.__enable_checkbox(count_checkbox_to_enable)
         i = 0
@@ -43,5 +46,6 @@ class CheckboxesScrollPage(BaseObject):
             self.click(checkbox)
             i += 1
 
+    @allure.step("Получение значение счетчика чекбоксов")
     def get_checkbox_counter(self):
         return self.get_text(self.CHECKBOX_COUNTER)

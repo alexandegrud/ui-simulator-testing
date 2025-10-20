@@ -1,5 +1,6 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
+import allure
 
 class SortingPage(BaseObject):
 
@@ -16,27 +17,33 @@ class SortingPage(BaseObject):
         self.url = url
         super().__init__(driver)
 
+    @allure.step("Переход в раздел 'Sorting'")
     def open_section(self):
         self.driver.get(self.url)
 
+    @allure.step("Сортировка по имени")
     def set_name_sort(self, on: bool):
         if self.name_sort_enabled != on:
             self.click(self.NAME_SORTING_BTN)
             self.name_sort_enabled = on
 
+    @allure.step("Сортировка по возрасту")
     def set_age_sort(self, on: bool):
         if self.age_sort_enabled != on:
             self.click(self.AGE_SORTING_BTN)
             self.age_sort_enabled = on
 
+    @allure.step("Сортировка по должности")
     def set_role_sort(self, on: bool):
         if self.role_sort_enabled != on:
             self.click(self.ROLE_SORTING_BTN)
             self.role_sort_enabled = on
 
+    @allure.step("Получение всех строк из таблицы")
     def get_text_from_rows(self):
         return self.get_texts_of_all_elements(self.ROWS_IN_TABLE)
 
+    @allure.step("Получение необходимого столбца из строк таблицы")
     def get_column(self, get_name_column=False, get_age_column=False, get_role_column=False):
         texts = self.get_text_from_rows()
         column = []

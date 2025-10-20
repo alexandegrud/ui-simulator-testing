@@ -2,6 +2,7 @@ from base.base import BaseObject
 from selenium.webdriver.common.by import By
 import json
 import yaml
+import allure
 
 class DataConvertPage(BaseObject):
 
@@ -14,26 +15,33 @@ class DataConvertPage(BaseObject):
         super().__init__(driver)
         self.url = url
 
+    @allure.step("Переход в раздел 'Data convert'")
     def open_section(self):
         self.driver.get(self.url)
 
+    @allure.step("Конвертирование данных в json формат")
     def convert_data_to_json(self):
         self.click(self.CONVERT_TO_JSON_BTN)
 
+    @allure.step("Конвертирование данных в yaml формат")
     def convert_data_to_yaml(self):
         self.click(self.CONVERT_TO_YAML_BTN)
 
+    @allure.step("Ввод данных json формата")
     def input_json_data(self, data):
         data_json = json.dumps(data)
         self.send_keys(self.INPUT_DATA_FIELD, data_json)
 
+    @allure.step("Ввод данных yaml формата")
     def input_yaml_data(self, data):
         data_yaml = yaml.dump(data)
         self.send_keys(self.INPUT_DATA_FIELD, data_yaml)
 
+    @allure.step("Получение полученных данных после конвертации")
     def get_output_data(self):
         return self.get_input_or_output_text(self.OUTPUT_DATA_FIELD)
 
+    @allure.step("Проверка формата у данных")
     def detect_format(self):
         data = self.get_output_data()
         data_strip = data.strip()

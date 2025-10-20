@@ -1,5 +1,6 @@
 from pytest import mark
 from helper.digits_utils import DigitsUtils
+import allure
 
 @mark.parametrize(
     "max_number, attempts_count, expected_message",
@@ -19,6 +20,9 @@ from helper.digits_utils import DigitsUtils
     ]
 )
 
+@allure.title("Проверка появление об ошибки при невалидных конфигурациях игры")
+@allure.description("Проверка появление об ошибки при невалидных конфигурациях игры")
+@allure.suite("Game page")
 def test_invalid_config_game(init_game_page, max_number, attempts_count, expected_message):
     init_game_page.open_sections()
     init_game_page.enter_parameter_for_game_and_start(max_number, attempts_count)
@@ -39,6 +43,9 @@ def test_invalid_config_game(init_game_page, max_number, attempts_count, expecte
     ]
 )
 
+@allure.title("Проверка появление об ошибки при невалидном значении Guess")
+@allure.description("Проверка появление об ошибки при невалидном значении Guess")
+@allure.suite("Game page")
 def test_invalid_guess_value(init_game_page, max_number, attempts_count, guess_value, expected_message):
     init_game_page.open_sections()
     init_game_page.enter_parameter_for_game_and_start(max_number, attempts_count)
@@ -60,6 +67,9 @@ def test_invalid_guess_value(init_game_page, max_number, attempts_count, guess_v
     ]
 )
 
+@allure.title("Значение Guess не превышает максимальное значение")
+@allure.description("Значение Guess не превышает максимальное значение заданное при конфигурации игры")
+@allure.suite("Game page")
 def test_secret_number_less_or_equal_max(init_game_page, max_number, attempts_count):
     init_game_page.open_sections()
     init_game_page.enter_parameter_for_game_and_start(max_number, attempts_count)
@@ -84,6 +94,13 @@ def test_secret_number_less_or_equal_max(init_game_page, max_number, attempts_co
     ]
 )
 
+@allure.title("Проверка сообщения о результате игры")
+@allure.description("""Тест проверяет корректность отображения сообщения после попытки угадать число:
+- Если число угадано 
+- Если число больше/меньше
+- Если закончились попытки
+""")
+@allure.suite("Game page")
 def test_validate_result_message(init_game_page, max_number, attempts_count, guess_value, win, expected_message):
     init_game_page.open_sections()
     result_message = init_game_page.check_result_message(max_number, attempts_count, guess_value, win)
@@ -107,6 +124,13 @@ def test_validate_result_message(init_game_page, max_number, attempts_count, gue
     ]
 )
 
+@allure.title("Проверка сообщения о попытках")
+@allure.description("""Тест проверяет корректность отображения сообщения о попытках при окончании игры:
+- Если число не угадано
+- Если число угадано
+- Если закончились попытки
+""")
+@allure.suite("Game page")
 def test_validate_attempts_message(init_game_page, max_number, attempts_count, guess_value, win, lose, expected_message):
     init_game_page.open_sections()
     attempts_message = init_game_page.check_attempts_message(max_number, attempts_count, guess_value, win, lose)
@@ -116,6 +140,9 @@ def test_validate_attempts_message(init_game_page, max_number, attempts_count, g
         expected_message.format(number_from_message=number_from_message)
     )
 
+@allure.title("Проверка отображаемого количества попыток в rules")
+@allure.description("Тест проверяет совпадает ли количество попыток заданных при конфигурации с количеством в rules")
+@allure.suite("Game page")
 def test_check_attempts_count_in_rules(init_game_page):
     max_number = 2
     attempts_count = 3
@@ -126,6 +153,9 @@ def test_check_attempts_count_in_rules(init_game_page):
         attempts_count
     )
 
+@allure.title("Проверка корректности отображения значения Guess в сообщении о результате игры")
+@allure.description("Отгадывается число guess и проверяется что оно совпадает с число из сообщения о результатах игры")
+@allure.suite("Game page")
 def test_check_secret_number_from_result_message(init_game_page):
     max_number = 2
     attempts_count = 3

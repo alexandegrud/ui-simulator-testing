@@ -1,4 +1,5 @@
 from pytest import mark
+import allure
 
 @mark.parametrize(
     "values",
@@ -15,6 +16,9 @@ from pytest import mark
         "empty"
     ]
 )
+@allure.title("Добавление значений")
+@allure.description("Добавление разных значений и проверка, что они добавились")
+@allure.suite("Input and click page")
 def test_add_value(init_input_click_page,values):
     init_input_click_page.open_section()
     init_input_click_page.add_values(values)
@@ -37,6 +41,9 @@ def test_add_value(init_input_click_page,values):
         "delete all values",
     ]
 )
+@allure.title("Удаление значений")
+@allure.description("Добавляем значение и затем удаляем необходимое количество, проверяем что значение удалились")
+@allure.suite("Input and click page")
 def test_delete_value(init_input_click_page, values, count_delete, values_expected):
     init_input_click_page.open_section()
     init_input_click_page.add_values(values)

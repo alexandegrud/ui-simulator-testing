@@ -1,5 +1,9 @@
 from pytest import mark
+import allure
 
+@allure.title("Авторизация")
+@allure.description("Выполнение авторизации")
+@allure.suite("Login page")
 def test_login(init_login_page):
     init_login_page.login()
     init_login_page.assertions.is_equal(
@@ -21,10 +25,16 @@ def test_login(init_login_page):
         "Empty login field",
     ]
 )
+@allure.title("Невалидная авторизация")
+@allure.description("Выполнение невалидных авторизаций")
+@allure.suite("Login page")
 def test_invalid_login(init_login_page, login, password, expected_error):
     init_login_page.login(login, password)
     init_login_page.assertions.is_equal(init_login_page.get_error_msg(), expected_error)
 
+@allure.title("Выполняем Logout")
+@allure.description("Выполнение Logout")
+@allure.suite("Login page")
 def test_logout(init_login_page):
     init_login_page.login()
     init_login_page.click_logout()

@@ -1,5 +1,6 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
+import allure
 
 class MainPage(BaseObject):
 
@@ -22,6 +23,7 @@ class MainPage(BaseObject):
         super().__init__(driver)
         self.url = url
 
+    @allure.step("Открываем каждый раздел поочереди и получаем url")
     def open_all_page_and_get_url(self):
 
         page_to_check = [
@@ -45,8 +47,10 @@ class MainPage(BaseObject):
 
         return result
 
+    @allure.step("Включаем night mode")
     def turn_on_night_mode(self):
         self.click(self.DAY_NIGHT_BTN)
 
+    @allure.step("Получаем актуальный цвет бэк-граунда")
     def get_back_ground_color(self):
         return self.get_css_property(self.MAIN_PAGE_BODY, "background-color")

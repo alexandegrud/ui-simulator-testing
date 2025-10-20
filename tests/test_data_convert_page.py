@@ -1,3 +1,9 @@
+import allure
+from pytest import mark
+
+@allure.title("Конвертация данных в yaml формат")
+@allure.description("Выполнение конвертации данных из json формата в yaml")
+@allure.suite("Data convert page")
 def test_convert_to_yaml(init_data_convert_page):
     data = {
         "name": "Alice",
@@ -13,6 +19,9 @@ def test_convert_to_yaml(init_data_convert_page):
         expected_message
     )
 
+@allure.title("Конвертация данных в json формат")
+@allure.description("Выполнение конвертации данных из yaml формата в json")
+@allure.suite("Data convert page")
 def test_convert_to_json(init_data_convert_page):
     data = {
     "age": 30,

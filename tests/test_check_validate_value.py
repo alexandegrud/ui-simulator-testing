@@ -1,4 +1,5 @@
 from pytest import mark
+import allure
 
 @mark.parametrize(
     "value, expected_message, expected_color",
@@ -27,6 +28,12 @@ from pytest import mark
         "Not a number (value = 54w)",
     ]
 )
+@allure.title("Проверка валидации значения")
+@allure.description("""Тест проверяет работу механизма валидации числовых и текстовых значений:
+- При вводе корректного числа в диапазоне отображается сообщение «Valid» с зелёным цветом.
+- При вводе некорректного числа или текс выводится соответствующее сообщение и цвет ошибки.
+""")
+@allure.suite("Check and validate")
 def test_validate_value(init_value_validate_page, value, expected_message, expected_color):
     init_value_validate_page.open_section()
     init_value_validate_page.enter_value(value)

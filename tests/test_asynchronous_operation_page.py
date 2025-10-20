@@ -1,4 +1,5 @@
 from pytest import mark
+import allure
 
 @mark.parametrize(
     "value,expected_value",
@@ -11,7 +12,9 @@ from pytest import mark
         "Max delay value",
     ]
 )
-
+@allure.title("Проверка, что время загрузки не превышает заданное время")
+@allure.description("Тест проверяет что фактическое время загрузки <= заданному")
+@allure.suite("Data loading")
 def test_check_time_load(init_asynchronous_operation_page, value, expected_value):
     init_asynchronous_operation_page.open_section()
     init_asynchronous_operation_page.data_loading.clear_input_field()
@@ -41,7 +44,9 @@ def test_check_time_load(init_asynchronous_operation_page, value, expected_value
         "Empty",
     ]
 )
-
+@allure.title("Проверка появления сообщения об ошибки при невалидном значении")
+@allure.description("Тест проверяет появление ошибки при разных невалидных значения")
+@allure.suite("Data loading")
 def test_invalid_value(init_asynchronous_operation_page, value, expected_message):
     init_asynchronous_operation_page.open_section()
     init_asynchronous_operation_page.data_loading.clear_input_field()
@@ -51,6 +56,9 @@ def test_invalid_value(init_asynchronous_operation_page, value, expected_message
         expected_message
     )
 
+@allure.title("Проверка изменения стейта у кнопки при наведении курсора")
+@allure.description("Тест проверяет, что меняется стейт у кнопки при наведении курсора")
+@allure.suite("Data loading")
 def test_hover_state_of_load_button(init_asynchronous_operation_page):
     expected_color = "rgba(255, 193, 7, 1)"
     init_asynchronous_operation_page.open_section()
@@ -60,6 +68,9 @@ def test_hover_state_of_load_button(init_asynchronous_operation_page):
         expected_color
     )
 
+@allure.title("Проверка некликабельности кнопки при невалидном значении")
+@allure.description("Тест проверяет, что кнопка некликабельна если значении невалидно")
+@allure.suite("Data loading")
 def test_load_btn_is_not_clickable(init_asynchronous_operation_page):
     value = 100
     init_asynchronous_operation_page.open_section()
@@ -67,6 +78,9 @@ def test_load_btn_is_not_clickable(init_asynchronous_operation_page):
     init_asynchronous_operation_page.data_loading.enter_value(value)
     init_asynchronous_operation_page.data_loading.check_load_btn_is_not_clickable()
 
+@allure.title("Проверка отображения чекмарки при окончании загрузки")
+@allure.description("Тест проверяет, что появляется чекмарка при окончании загрузки")
+@allure.suite("Data loading")
 def test_checkmark_is_displayed(init_asynchronous_operation_page):
     value = 2
     init_asynchronous_operation_page.open_section()
@@ -74,6 +88,9 @@ def test_checkmark_is_displayed(init_asynchronous_operation_page):
     init_asynchronous_operation_page.data_loading.enter_value_and_click(value)
     init_asynchronous_operation_page.data_loading.check_checkmark_is_displayed()
 
+@allure.title("Проверка отображения индикатора загрузки")
+@allure.description("Тест проверяет, что отображается индикатор загрузки")
+@allure.suite("Data loading")
 def test_loading_indicator_is_displayed(init_asynchronous_operation_page):
     value = 5
     init_asynchronous_operation_page.open_section()
@@ -82,7 +99,7 @@ def test_loading_indicator_is_displayed(init_asynchronous_operation_page):
     init_asynchronous_operation_page.data_loading.check_loading_indicator_is_displayed()
 
 
-#Autocomlete
+#Autocomplete
 
 @mark.parametrize(
     "text",
@@ -101,7 +118,9 @@ def test_loading_indicator_is_displayed(init_asynchronous_operation_page):
         "A 2-letter search query",
     ]
 )
-
+@allure.title("Проверка корректности автокомплита")
+@allure.description("Тест проверяет, что автокомплит правильно выводит результат взависимости от введенного текста")
+@allure.suite("Autocomplete")
 def test_autocomplete_correctness(init_asynchronous_operation_page, text):
     init_asynchronous_operation_page.open_section()
     init_asynchronous_operation_page.autocomplete.enter_text(text)
@@ -127,7 +146,9 @@ def test_autocomplete_correctness(init_asynchronous_operation_page, text):
         "Empty",
     ]
 )
-
+@allure.title("Проверка результата при невалидном запросе")
+@allure.description("Тест проверяет, что нету результата если запрос невалидный")
+@allure.suite("Autocomplete")
 def test_invalid_search(init_asynchronous_operation_page, text, expected_message):
     init_asynchronous_operation_page.open_section()
     init_asynchronous_operation_page.autocomplete.enter_text(text)
@@ -149,7 +170,12 @@ def test_invalid_search(init_asynchronous_operation_page, text, expected_message
         "100 items in list",
     ]
 )
-
+@allure.title("Проверка корректной загрузки элементов при бесконечном скролле")
+@allure.description("""Тест проверяет работу механизма бесконечном скролле
+- Делается скролл пока не прогрузится указанное количество элементов, затем проверяется что количество элементов равно
+ожидаемому
+""")
+@allure.suite("Infinite Scroll")
 def test_infinite_scrolling(init_asynchronous_operation_page, stop_count, expected_count):
     init_asynchronous_operation_page.open_section()
     init_asynchronous_operation_page.infinite_scroll.scroll_to_section()
@@ -158,10 +184,11 @@ def test_infinite_scrolling(init_asynchronous_operation_page, stop_count, expect
         count,
         expected_count
     )
-    print(count)
 
 # Error Handing
-
+@allure.title("Проверка появление ошибки")
+@allure.description("Тест проверяет появление ошибки")
+@allure.suite("Error Handing")
 def test_check_error_simulated_msg(init_asynchronous_operation_page):
     expected_message = "An error occurred: Simulated error"
     init_asynchronous_operation_page.open_section()
@@ -171,7 +198,9 @@ def test_check_error_simulated_msg(init_asynchronous_operation_page):
         init_asynchronous_operation_page.error_handling.get_error_message(),
         expected_message
     )
-
+@allure.title("Проверка отображения сообщения о Processing request")
+@allure.description("Тест проверяет появление сообщения Processing request")
+@allure.suite("Error Handing")
 def test_check_processing_msg(init_asynchronous_operation_page):
     expected_message = "Processing request..."
     init_asynchronous_operation_page.open_section()

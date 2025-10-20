@@ -2,6 +2,7 @@ from selenium.common import TimeoutException
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
 import time
+import allure
 
 class DragDropPage(BaseObject):
 
@@ -13,16 +14,16 @@ class DragDropPage(BaseObject):
         super().__init__(driver)
         self.url = url
 
+    @allure.step("Переход в раздел Drag and drop")
     def open_section(self):
         self.driver.get(self.url)
 
-    def get_all_letters_in_container(self):
-        return self.get_all_elements_located(self.LETTERS_IN_CONTAINER)
-
+    @allure.step("Получение всех букв")
     def get_letters_container(self):
-        letters = self.get_all_letters_in_container()
+        letters = self.get_all_elements_located(self.LETTERS_IN_CONTAINER)
         return letters
 
+    @allure.step("Составление слова из букв")
     def construct_word(self, word_to_construct):
         letters = self.get_letters_container()
 
@@ -44,12 +45,14 @@ class DragDropPage(BaseObject):
                 self.drag_and_drop(moving_letter_element, target_letter_element)
                 letters = self.get_letters_container()
 
+    @allure.step("Получение текста из сообщения об успехе")
     def get_text_of_success_message(self):
         try:
             return self.get_text(self.DONE_MESSAGE)
         except TimeoutException:
             return "The message was not displayed"
 
+    @allure.step("Проверка что кнопка мигает")
     def check_button_blinking(self, timeout=5, poll_frequency=1):
         end_time = time.time() + timeout
         while time.time() < end_time:

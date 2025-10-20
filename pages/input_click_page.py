@@ -1,5 +1,6 @@
 from base.base import BaseObject
 from selenium.webdriver.common.by import By
+import allure
 
 class InputClickPage(BaseObject):
 
@@ -15,6 +16,7 @@ class InputClickPage(BaseObject):
         super().__init__(driver)
         self.url = url
 
+    @allure.step("Переход в раздел 'Input and click'")
     def open_section(self):
         self.driver.get(self.url)
 
@@ -25,16 +27,19 @@ class InputClickPage(BaseObject):
         self._enter_value(value)
         self.click(self.ADD_BTN)
 
+    @allure.step("Добавление значений")
     def add_values(self, values):
         for value in values:
             self.__add_value(value)
 
+    @allure.step("Удаление значений")
     def delete_values(self, delete_count):
         i = 0
         while i < delete_count:
             self.click(self.DELETE_BTN)
             i += 1
 
+    @allure.step("Получение всех текущих значений")
     def get_text_all_added_values(self):
         return self.get_texts_of_all_elements(self.ITEM_IN_CONTAINER)
 

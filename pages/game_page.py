@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from base.base import BaseObject
 from helper.digits_utils import DigitsUtils
+import allure
 
 class GamePage(BaseObject):
 
@@ -20,38 +21,48 @@ class GamePage(BaseObject):
         super().__init__(driver)
         self.url = url
 
+    @allure.step("Переход в раздел 'Game'")
     def open_sections(self):
         self.driver.get(self.url)
 
+    @allure.step("Получение текста ошибки при невалидной конфигурации")
     def get_text_of_config_error_message(self):
         return self.get_text(self.ERROR_CONFIG_MSG)
 
+    @allure.step("Ввод значений и старт игры")
     def enter_parameter_for_game_and_start(self, max_number, attempts_count):
         self.send_keys(self.NUMBER_FIELD, max_number)
         self.send_keys(self.ATTEMPTS_FIELD, attempts_count)
         self.click(self.START_GAME_BTN)
 
+    @allure.step("Получение текста ошибки при невалидном значении Guess")
     def get_text_of_guess_error_message(self):
         return self.get_text(self.ERROR_MSG)
 
+    @allure.step("Ввод значения Guess и проверка")
     def enter_guess_and_check(self, value):
         self.send_keys(self.GUESS_FILED, value)
         self.click(self.CHECK_GUESS_BTN)
 
+    @allure.step("Получение числа попыток отображаемого в Rules")
     def get_number_of_attempts_from_rules(self):
         text = self.get_text(self.RULES_TEXT)
         return DigitsUtils.extract_digits(text)
 
+    @allure.step("Возврат к конфигурации игры")
     def back_to_config(self):
         self.click(self.BACK_TO_CONFIG_BTN)
 
+    @allure.step("Получение текста результата после проверки введенного Guess")
     def get_text_result_message(self):
         return self.get_text(self.RESULT_MSG)
 
+    @allure.step("Получение отображаемого числа Guess из сообщения о результате игры")
     def get_guess_number_from_result_message(self):
         text = self.get_text(self.RESULT_MSG)
         return DigitsUtils.extract_digits(text)
 
+    @allure.step("Угадывание загаданного числа")
     def guess_number(self, attempts_count):
         i = 0
         while i < attempts_count:
@@ -63,6 +74,7 @@ class GamePage(BaseObject):
             i += 1
         return i
 
+    @allure.step("Получение необходимого сообщения о результате игры")
     def check_result_message(self, max_number, attempts_count, gues_value, win=False):
         if win:
             self.enter_parameter_for_game_and_start(max_number, attempts_count)
@@ -79,8 +91,7 @@ class GamePage(BaseObject):
                     return text
                 self.back_to_config()
 
-
-
+    @allure.step("Получение необходимого сообщения о попытках")
     def check_attempts_message(self, max_number, attempts_count, gues_value, win=False, lose=False):
         self.enter_parameter_for_game_and_start(max_number, attempts_count)
         if lose:

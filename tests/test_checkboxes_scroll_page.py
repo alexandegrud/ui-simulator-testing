@@ -1,4 +1,5 @@
 from pytest import mark
+import allure
 
 @mark.parametrize(
     "count_checkbox_to_enable, checkboxes_to_disable, expected_checkbox_count",
@@ -18,6 +19,13 @@ from pytest import mark
     ]
 
 )
+@allure.title("Проверка корректности счетчика при включении/ыключении чекбоксов")
+@allure.description("""Тест проверяет работу чекбоксов:
+- Включается указанное количество чекбоксов
+- Затем часть из них отключается
+- Проверяется, что счётчик активных чекбоксов отображает правильное значение
+""")
+@allure.suite("Checkboxes and scroll")
 def test_enable_and_disable_checkbox(init_checkbox_page, count_checkbox_to_enable,
                                      checkboxes_to_disable, expected_checkbox_count):
     init_checkbox_page.open_section()
