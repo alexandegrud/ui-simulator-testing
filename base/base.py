@@ -8,9 +8,10 @@ from helper.assertions import Assertions
 from selenium.webdriver import ActionChains
 from helper.decorators import Decorator
 from helper.digits_utils import DigitsUtils
+from helper.logger_class import LoggingMeta
 
 
-class BaseObject:
+class BaseObject(metaclass=LoggingMeta):
 
     def __init__(self, driver: WebDriver):
         self.driver = driver

@@ -3,3 +3,4 @@ selenium==4.35.0
 webdriver-manager==4.0.2
 pytest-rerunfailures==16.1
 allure-pytest==2.15.0
+python-dotenv==1.1.1
