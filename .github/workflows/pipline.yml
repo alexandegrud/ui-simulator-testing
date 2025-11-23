@@ -1,4 +1,4 @@
-name: Run Employee API Tests
+name: Run UI Simulator tests
 
 on:
   push:
@@ -29,3 +29,12 @@ jobs:
           USER_NAME: ${{ secrets.USER_NAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: pytest -s
+
+      - name: Generate Allure Report
+        run: allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report
