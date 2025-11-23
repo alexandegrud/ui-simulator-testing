@@ -25,8 +25,8 @@ jobs:
 
       - name: Install Allure commandline
         run: |
-          sudo apt-get update
-          sudo apt-get install -y allure
+          sudo apt-get install -y npm
+          sudo npm install -g allure-commandline --save-dev
 
       - name: Run tests
         env:
