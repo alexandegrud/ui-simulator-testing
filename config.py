@@ -20,4 +20,3 @@ class URL:
 class Secrets:
     USER_NAME: Final[str] = os.getenv("USER_NAME")
     PASSWORD: Final[str] = os.getenv("PASSWORD")
-    PAT_TOKEN: Final[str] = os.getenv("PAT_TOKEN")
