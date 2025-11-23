@@ -20,3 +20,4 @@ class URL:
 class Secrets:
     USER_NAME: Final[str] = os.getenv("USER_NAME")
     PASSWORD: Final[str] = os.getenv("PASSWORD")
+    GITHUB_TOKEN: Final[str] = os.getenv("GITHUB_TOKEN")
