@@ -34,6 +34,7 @@ def init_config(request):
 @fixture
 def get_chrome_options():
     options = ChromeOptions()
+    options.add_argument('--headless')
     return options
 
 
